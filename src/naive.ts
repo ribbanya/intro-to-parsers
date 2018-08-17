@@ -1,46 +1,51 @@
 interface Result {
-  readonly success: boolean;
   readonly rest: string;
+  readonly success: boolean;
 }
 
 type Parser = (input: string) => Result;
+type Generator = (input: string) => Parser;
+type Combinator = (input: Parser[]) => Parser;
 
-export function char(c: string): Parser {
-  return (input: string): Result => {
-    return (input[0] === c)
+export const char: Generator = (c: string): Parser => (
+  (input: string): Result => (
+    (input[0] === c)
       ? { success: true, rest: input.slice(1) }
-      : { success: false, rest: input };
-  }
-}
+      : { success: false, rest: input }
+  )
+);
 
-export function sequence(parsers: Parser[]): Parser {
-  return (input: string): Result => {
-    let next = input
-    for (let i = 0; i < parsers.length; i++) {
-      const parser = parsers[i]
-      const { success, rest } = parser(next)
+export const sequence: Combinator = (parsers: Parser[]): Parser => (
+  (input: string): Result => {
+    let next: string = input;
+    for (const p of parsers) {
+      const { success, rest } = p(next);
       if (!success) {
-        return { success, rest }
+        return { success, rest };
       }
-      next = rest
+      next = rest;
     }
-    return { success: true, rest: next }
+    return { success: true, rest: next };
   }
-}
+);
 
-export function string(str: string): Parser {
-  return sequence([...str].map(char))
-}
+export const stringify: Generator = (str: string): Parser => (
+  sequence([...str].map(char))
+);
 
-export function either(parsers: Parser[]): Parser {
-  return (input: string): Result => {
-    for (var i = 0; i < parsers.length; i++) {
-      const parser = parsers[i]
-      const { success, rest } = parser(input)
+export const either: Combinator = (parsers: Parser[]): Parser => (
+  (input: string): Result => {
+    for (const p of parsers) {
+      const { success, rest } = p(input);
       if (success) {
-        return { success, rest }
+        return { success, rest };
       }
     }
-    return { success: false, rest: input }
+    return { success: false, rest: input };
   }
-}
+);
+
+export const parser: Parser = sequence([
+  either([stringify('ab'), stringify('dc')]),
+  either([stringify('ba'), stringify('cd')]),
+]);
