@@ -6,7 +6,7 @@ module.exports = {
   testPathIgnorePatterns: ["^<rootDir>/dist/"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   collectCoverage: true,
-  "collectCoverageFrom": [
+  collectCoverageFrom: [
     "**/src/**/*.{js,jsx,ts,tsx}",
     "!**/node_modules/**"
   ],
