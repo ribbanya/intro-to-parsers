@@ -49,3 +49,5 @@ export const parser: Parser = sequence([
   either([stringify('ab'), stringify('dc')]),
   either([stringify('ba'), stringify('cd')]),
 ]);
+
+// TODO: nOrMore(), maybe()
