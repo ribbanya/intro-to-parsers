@@ -1,4 +1,3 @@
-
 class Parser {
   constructor(parse) {
     this.parse = parse
@@ -24,3 +23,5 @@ class Parser {
     return new Parser(stream => this.parse(stream).fold(s, f))
   }
 }
+
+module.exports = Parser;
