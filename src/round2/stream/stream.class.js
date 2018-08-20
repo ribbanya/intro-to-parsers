@@ -1,18 +1,15 @@
-
-export class Stream {
+class Stream {
   constructor(iterable, cursor, length) {
-    this.iterable = iterable
-    this.cursor = cursor || 0
-    this.length = length === undefined
-      ? iterable.length - this.cursor
-      : length
+    this.iterable = iterable;
+    this.cursor = cursor || 0;
+    this.length = length === undefined ? iterable.length - this.cursor : length;
   }
   // Get the first value from the iterable.
   head() {
     if (this.length <= 0) {
-      throw new TypeError('index out of range')
+      throw new TypeError("index out of range");
     }
-    return this.iterable[this.cursor]
+    return this.iterable[this.cursor];
   }
   // Consume the stream by moving the cursor.
   move(distance) {
@@ -20,20 +17,21 @@ export class Stream {
       this.iterable,
       this.cursor + distance,
       this.length - distance
-    )
+    );
   }
   // Same interface as Array.slice but returns a new Stream
   slice(start, stop) {
     if (stop < start) {
-      throw new Error('stop < start')
+      throw new Error("stop < start");
     }
     if (stop && stop > this.length) {
-      throw new TypeError('index out of range')
+      throw new TypeError("index out of range");
     }
     return new Stream(
       this.iterable,
       this.cursor + start,
       (stop || this.length) - start
-    )
+    );
   }
 }
+module.exports = Stream;
