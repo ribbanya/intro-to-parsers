@@ -1,1 +1,0 @@
-const Parser = require('./parser.class');

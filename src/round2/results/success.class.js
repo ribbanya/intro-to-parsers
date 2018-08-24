@@ -1,3 +1,5 @@
+const Result = require('./result.class');
+
 class Success extends Result {
   map(fn) {
     return new Success(fn(this.value), this.rest)

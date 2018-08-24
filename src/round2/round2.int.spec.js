@@ -1,9 +1,12 @@
+'use strict'
 const Failure = require('./results/failure.class');
 const Success = require('./results/success.class');
-const Parser = require('./parser/parser.class');
+const Parser = require('./parser');
 
 const {
-  char
+  char,
+  char0,
+  where
 } = require('./round2');
 
 describe('Example 1', () => {

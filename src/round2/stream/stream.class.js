@@ -7,7 +7,7 @@ class Stream {
   // Get the first value from the iterable.
   head() {
     if (this.length <= 0) {
-      throw new TypeError("index out of range");
+      throw new TypeError('index out of range');
     }
     return this.iterable[this.cursor];
   }
@@ -22,10 +22,10 @@ class Stream {
   // Same interface as Array.slice but returns a new Stream
   slice(start, stop) {
     if (stop < start) {
-      throw new Error("stop < start");
+      throw new Error('stop < start');
     }
     if (stop && stop > this.length) {
-      throw new TypeError("index out of range");
+      throw new TypeError('index out of range');
     }
     return new Stream(
       this.iterable,
